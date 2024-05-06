@@ -25,7 +25,7 @@ class ProcessingData(BaseModel):
 class CommercializationDetail(BaseModel):
     Produto: str
     Quantidade: Optional[str] = Field(None, alias="Quantidade (L.)")
-    #Quantidade: str
+
 
 class CommercializationData(BaseModel):
     year: int
@@ -50,33 +50,3 @@ class ExportDetail(BaseModel):
 class ExportData(BaseModel):
     year: Optional[int]
     data: List[ImportDetail]
-
-"""
-############################################################################################################
-############################################################################################################
-###################### Versão sem tratamento ###############################################################
-############################################################################################################
-############################################################################################################
-"""
-
-"""
-class ProcessingData(BaseModel):
-    category: str
-    year: int = None
-    data: str
-
-class CommercializationData(BaseModel):
-year: int
-data: str
-
-class ImportData(BaseModel):
-    category: str
-    year: int = None
-    data: str
-
-class ExportData(BaseModel):
-    category: str
-    year: int = None
-    data: str
-
-"""
