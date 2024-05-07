@@ -50,3 +50,4 @@ class ExportDetail(BaseModel):
 class ExportData(BaseModel):
     year: Optional[int]
     data: List[ImportDetail]
+

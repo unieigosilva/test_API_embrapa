@@ -1,0 +1,7 @@
+2024-05-06 21:17:58,162 - ERROR - Erro HTTP: 422 para a URL http://127.0.0.1:8000/production/?ano=3000
+2024-05-06 21:25:43,048 - ERROR - Erro HTTP: 404 para a URL http://127.0.0.1:8000/favicon.ico
+2024-05-06 21:25:49,000 - ERROR - Erro HTTP: 404 para a URL http://127.0.0.1:8000/favicon.ico
+2024-05-06 21:25:49,619 - ERROR - Erro HTTP: 404 para a URL http://127.0.0.1:8000/favicon.ico
+2024-05-06 21:25:50,499 - ERROR - Erro HTTP: 404 para a URL http://127.0.0.1:8000/favicon.ico
+2024-05-06 21:26:25,470 - ERROR - Falha ao buscar dados de processamento para tes, ano -11: 'tes'
+2024-05-06 21:26:28,382 - ERROR - Falha ao buscar dados de processamento para tes, ano -11: 'tes'
