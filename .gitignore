@@ -1,4 +1,6 @@
 # Arquivos e diretórios a serem ignorados
 TEST_API_EMBRAPA.egg-info/
+app/sql_app/embrapa.db
 __pycache__/
-embrapa.db
+tests/__pycache__
+app/sql_app/__pycache__
