@@ -1,4 +1,7 @@
+DATABASE_PATH = "./app/sql_app/embrapa.db"
+
 settings_data_processing = {
+    "database_path": DATABASE_PATH,
     "producao": {
         "url": "http://vitibrasil.cnpuv.embrapa.br/download/Producao.csv",
         "CSV": "Producao.csv"
@@ -48,7 +51,10 @@ settings_data_processing = {
 
 class Config_AC:
     @staticmethod
-    def get(setting_name, key):
-        return settings_data_processing.get(setting_name, {}).get(key, None)
-    
+    def get(setting_name, key=None):
+        if key:
+            return settings_data_processing.get(setting_name, {}).get(key, None)
+        else:
+            # Retorna o valor diretamente se nenhum sub-chave é especificada
+            return settings_data_processing.get(setting_name, None)
 

@@ -3,11 +3,12 @@ import requests
 from app.sql_app.database_manager import DatabaseManager
 from app.config import Config_AC
 
-class ProcesDataCSV:
+class ProdDataCSV:
     def __init__(self):
         self.csv_url = Config_AC.get('producao', 'url')
         self.csv_path = Config_AC.get('producao', 'CSV')
-        self.db_manager = DatabaseManager('C:/Users/Igor/Desktop/Projetos_python/pos_graduacao/Fase_1/test_API_embrapa/app/sql_app/embrapa.db')
+        database_path = Config_AC.get('database_path')  
+        self.db_manager = DatabaseManager(database_path)
 
     def download_csv(self):
         response = requests.get(self.csv_url)
@@ -36,7 +37,7 @@ class ProcesDataCSV:
         self.db_manager.create_table_if_not_exists("producao", schema)
 
 if __name__ == "__main__":
-    handler = ProcesDataCSV()
+    handler = ProdDataCSV()
     handler.download_csv()
     handler.setup_database()
     handler.load_into_database()

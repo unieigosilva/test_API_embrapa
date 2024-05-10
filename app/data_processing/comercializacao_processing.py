@@ -9,7 +9,8 @@ class ComercDataCSV:
         self.csv_url = Config_AC.get('Comercializacao', 'url')
         self.csv_path = Config_AC.get('Comercializacao', 'CSV')
         # Criação de uma instância do gerenciador de banco de dados.
-        self.db_manager = DatabaseManager('C:/Users/Igor/Desktop/Projetos_python/pos_graduacao/Fase_1/test_API_embrapa/app/sql_app/embrapa.db')
+        database_path = Config_AC.get('database_path')  
+        self.db_manager = DatabaseManager(database_path)
         # Configuração e verificação da existência da tabela no banco de dados.
         self.setup_database()
 

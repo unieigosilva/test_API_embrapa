@@ -4,12 +4,13 @@ from app.sql_app.database_manager import DatabaseManager
 from app.config import Config_AC
 import os
 
-class Processamento:
+class ProctDataCSV:
     def __init__(self, csv_url, csv_path, table_name):
         self.csv_url = csv_url
         self.csv_path = csv_path
         self.table_name = table_name
-        self.db_manager = DatabaseManager('C:/Users/Igor/Desktop/Projetos_python/pos_graduacao/Fase_1/test_API_embrapa/app/sql_app/embrapa.db')
+        database_path = Config_AC.get('database_path')  
+        self.db_manager = DatabaseManager(database_path)
 
     def download_csv(self):
         response = requests.get(self.csv_url)
@@ -38,7 +39,7 @@ class Processamento:
         self.db_manager.create_table_if_not_exists(self.table_name, schema)
 
 if __name__ == "__main__":
-    # Configurações para cada tipo de processamento.
+    # Configurações para cada tipo de Processa.
     #table_suffix: table_suffix é um sufixo (ou parte final) que é adicionado ao nome base da tabela para formar o nome completo da tabela
     configurations = [
         {'key': '01', 'table_suffix': 'viniferas'},
@@ -51,9 +52,9 @@ if __name__ == "__main__":
     for config in configurations:
         csv_url = Config_AC.get('Processamento', f'url_{config["key"]}')
         csv_path = Config_AC.get('Processamento', f'CSV_{config["key"]}')
-        table_name = f'processamento_{config["table_suffix"]}'
+        table_name = f'Processamento_{config["table_suffix"]}'
         
-        handler = Processamento(csv_url, csv_path, table_name)
+        handler = ProctDataCSV(csv_url, csv_path, table_name)
         handler.download_csv()
         handler.setup_database()
         handler.load_into_database()
