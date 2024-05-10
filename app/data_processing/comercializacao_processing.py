@@ -1,51 +1,52 @@
 import pandas as pd
 import requests
-from io import StringIO
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
+from app.sql_app.database_manager import DatabaseManager
+from app.config import Config_AC
 
-class CSVProcessor:
-    def __init__(self, url, db_path):
-        self.url = url
-        self.db_path = db_path
-        self.engine = create_engine(f'sqlite:///{self.db_path}')
-        self.Session = sessionmaker(bind=self.engine)
-        self.df = self.download_csv()
+class ComercDataCSV:
+    def __init__(self):
+        # Configurações iniciais: obtenção da URL e caminho do arquivo CSV a partir de um arquivo de configuração centralizado.
+        self.csv_url = Config_AC.get('Comercializacao', 'url')
+        self.csv_path = Config_AC.get('Comercializacao', 'CSV')
+        # Criação de uma instância do gerenciador de banco de dados.
+        self.db_manager = DatabaseManager('C:/Users/Igor/Desktop/Projetos_python/pos_graduacao/Fase_1/test_API_embrapa/app/sql_app/embrapa.db')
+        # Configuração e verificação da existência da tabela no banco de dados.
+        self.setup_database()
+
+    def setup_database(self):
+        # Schema da tabela Comercializacao. Certifica-se de que a tabela exista antes de tentar carregar dados nela.
+        schema = "CREATE TABLE IF NOT EXISTS Comercializacao (produto TEXT, quantidade REAL)"
+        self.db_manager.create_table_if_not_exists("Comercializacao", schema)
 
     def download_csv(self):
-        """Baixa um arquivo CSV do URL especificado e retorna como um DataFrame."""
-        response = requests.get(self.url)
-        csv_raw = StringIO(response.text)
-        df = pd.read_csv(csv_raw, delimiter=';')
-        return df
+        # Download do arquivo CSV usando a biblioteca requests.
+        response = requests.get(self.csv_url)
+        with open(self.csv_path, 'wb') as f:
+            f.write(response.content)
+        print("Arquivo baixado com sucesso.")
 
-    def add_total_row(self):
-        """Adiciona uma linha 'Total' ao DataFrame para os produtos especificados."""
-        categories = ["VINHO DE MESA", "VINHO FINO DE MESA (VINÍFERA)", "SUCO", "DERIVADOS"]
-        df_filtered = self.df[self.df['produto'].isin(categories)]
-        total = df_filtered.filter(regex='^\d{4}$').sum()
-        total['produto'] = 'Total'
-        total_df = pd.DataFrame([total], columns=self.df.columns)
-        self.df = pd.concat([self.df, total_df], ignore_index=True)
+    def process_csv(self):
+        # Carregamento e processamento do CSV: remoção de uma coluna indesejada.
+        data = pd.read_csv(self.csv_path, delimiter=';')
+        data.drop(columns=data.columns[1], inplace=True)
+        return data
 
-    def insert_into_db(self):
-        """Insere o DataFrame processado no banco de dados."""
-        session = self.Session()
-        try:
-            self.df.to_sql('producao', self.engine, if_exists='append', index=False)
-            session.commit()
-            print("Dados inseridos com sucesso no banco de dados.")
-        except Exception as e:
-            print("Erro ao inserir dados no banco de dados:", e)
-        finally:
-            session.close()
+    def load_into_database(self):
+        # Carregamento dos dados processados para a tabela no banco de dados.
+        data = self.process_csv()
+        self.db_manager.load_data(data, 'Comercializacao')
+        print("Dados carregados no banco de dados com sucesso.")
 
-def main():
-    url = "http://vitibrasil.cnpuv.embrapa.br/download/Producao.csv"
-    db_path = 'C:\Users\Igor\Desktop\Documentos\Pessoal\Pós-graduação\Project_pos\Faze_1_teste\scrape_api_project _2\app\sql_app\embrapa.db'  # Caminho correto conforme sua estrutura de pastas
-    processor = CSVProcessor(url, db_path)
-    processor.add_total_row()
-    processor.insert_into_db()
+    def delete_csv_after_use(self):
+        # Remoção do arquivo CSV após o uso para evitar desordem e uso de espaço desnecessário.
+        import os
+        if os.path.exists(self.csv_path):
+            os.remove(self.csv_path)
+            print("Arquivo CSV removido após o uso.")
 
 if __name__ == "__main__":
-    main()
+    handler = ComercDataCSV()
+    handler.download_csv()
+    handler.process_csv()
+    handler.load_into_database()
+    handler.delete_csv_after_use()

@@ -78,3 +78,4 @@ def get_export_data(category: str, year: int = None):
         logging.error(f"Falha ao buscar dados de exportação para {category}, ano {year}: {e}")
         return {"error": "Falha ao buscar dados de exportação"}
     return {"category": category, "year": year, "data": data}
+

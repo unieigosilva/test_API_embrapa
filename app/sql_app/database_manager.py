@@ -1,29 +1,23 @@
 import sqlite3
+from contextlib import closing
 
 class DatabaseManager:
     def __init__(self, db_path):
         self.db_path = db_path
 
-    def create_database(self):
-        conn = sqlite3.connect(self.db_path)
-        cursor = conn.cursor()
-        cursor.execute('''
-            CREATE TABLE IF NOT EXISTS producao (
-                id INTEGER PRIMARY KEY,
-                produto TEXT,
-                quantidade INTEGER,
-                ano INTEGER
-            )
-        ''')
-        conn.commit()
-        conn.close()
+    def create_table_if_not_exists(self, table_name, schema):
+        with sqlite3.connect(self.db_path) as conn:
+            conn.execute(schema)
 
-    def insert_data(self, data):
-        conn = sqlite3.connect(self.db_path)
-        cursor = conn.cursor()
-        cursor.executemany('''
-            INSERT INTO producao (id, produto, quantidade, ano)
-            VALUES (?, ?, ?, ?)
-        ''', data)
-        conn.commit()
-        conn.close()
+    def load_data(self, data, table_name):
+        with sqlite3.connect(self.db_path) as conn:
+            data.to_sql(table_name, conn, if_exists='replace', index=False)
+
+"""
+def load_data(self, data, table_name):
+    with sqlite3.connect(self.db_path) as conn:
+        data.to_sql(table_name, conn, if_exists='append', index=False)
+Alternativa para Sobreposição Sem Perda de Dados:
+Se você deseja adicionar novos dados aos existentes sem excluir os dados antigos, você poderia usar if_exists='append'. 
+Com append, os dados do DataFrame são adicionados ao final da tabela existente sem alterar ou deletar os dados que já estavam lá.
+"""
