@@ -31,7 +31,6 @@ class CommercializationData(BaseModel):
     year: int
     data: List[ProductDetail]
 
-
 class ImportDetail(BaseModel):
     Pais: Optional[str] = Field(None, alias="Países")
     Quantidade: Optional[str] = Field(None, alias="Quantidade (Kg)")

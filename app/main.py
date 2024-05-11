@@ -1,6 +1,18 @@
 from fastapi import FastAPI, Request
 import logging
 
+from fastapi import FastAPI, Depends, HTTPException, status
+from sqlalchemy.orm import Session
+from app.sql_app.database import get_db
+from app.sql_app.models import (
+    Production, 
+    Commercialization,
+    Processing,
+    Importation,
+    Exportation,
+
+)
+
 from .scraper import (
     scrape_production,
     scrape_processing,
@@ -15,6 +27,14 @@ from .models import (
     ImportData,
     ExportData,
 )
+
+from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
+from jose import jwt, JWTError
+from datetime import datetime, timedelta
+from passlib.context import CryptContext
+from datetime import datetime, timedelta
+
+
 
 # Configuração do Logger
 logging.basicConfig(level=logging.ERROR, filename='error.log',
@@ -79,3 +99,49 @@ def get_export_data(category: str, year: int = None):
         return {"error": "Falha ao buscar dados de exportação"}
     return {"category": category, "year": year, "data": data}
 
+@app.get("/bd/production/{year}")
+def read_production(year: int, db: Session = Depends(get_db)):
+    try:
+        data = Production.get_production_by_year(year)
+        return {"year": year, "data": data}
+    except Exception as e:
+        raise HTTPException(status_code=404, detail=str(e))
+    
+
+@app.get("/bd/commercialization/{year}")
+def read_commercialization(year: int, db: Session = Depends(get_db)):
+    try:
+        data = Commercialization.get_commercialization_by_year(year)
+        return {"year": year, "data": data}
+    except Exception as e:
+        raise HTTPException(status_code=404, detail=str(e))
+
+@app.get("/bd/processing/{category}/{year}")
+def read_processing_data(category: str, year: int):
+    try:
+        data = Processing.get_data_by_category_and_year(category, year)
+        return {"category": category, "year": year, "data": data}
+    except ValueError as e:
+        raise HTTPException(status_code=404, detail=str(e))
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.get("/bd/importation/{category}/{year}")
+def read_importation_data(category: str, year: int):
+    try:
+        data = Importation.get_data_by_category_and_year(category, year)
+        return {"category": category, "year": year, "data": data}
+    except ValueError as e:
+        raise HTTPException(status_code=404, detail=str(e))
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.get("/bd/exportation/{category}/{year}")
+def read_exportation_data(category: str, year: int):
+    try:
+        data = Exportation.get_data_by_category_and_year(category, year)
+        return {"category": category, "year": year, "data": data}
+    except ValueError as e:
+        raise HTTPException(status_code=404, detail=str(e))
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))

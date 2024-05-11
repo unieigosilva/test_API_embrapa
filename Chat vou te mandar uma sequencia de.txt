@@ -1,0 +1,68 @@
+Chat vou te mandar uma sequencia de 3 prompts você vai analisar as informação e mandar um "ok" , após o terceiro prompt você não vai escrever nenhuma linha de código você vai fazer uma descrição com oque foi pedido e perguntar se pode prosseguir com construção do código. Me responda esse prompt com "Ok" para enviar em os próximos 3 prompts.
+
+
+1_prompt:
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+Descriação para  criação de novas rota de dados com banco de dadas  para meu codigo API estou usando a Fastapi.
+Estou usando um banco .bd que crei com SQLlite que crie localizado "C:\Users\Igor\Desktop\Projetos_python\pos_graduacao\Fase_1\test_API_embrapa\app\sql_app\embrapa.db"
+
+Olha eu tenho essa e a estrutura atual
+C:\Users\Igor\Desktop\Projetos_python\pos_graduacao\Fase_1\test_API_embrapa\app\main.py
+C:\Users\Igor\Desktop\Projetos_python\pos_graduacao\Fase_1\test_API_embrapa\app\models.py
+C:\Users\Igor\Desktop\Projetos_python\pos_graduacao\Fase_1\test_API_embrapa\app\scraper.py
+C:\Users\Igor\Desktop\Projetos_python\pos_graduacao\Fase_1\test_API_embrapa\app\config.py
+Mandei um print da estrurura do projeto: "Print_estrutura_projeto.png"
+Olha analise os arquivos .py enviadas, quero que analise os codigo:"main.py","models.py","scraper.py" e "config.py" e "Print_estrutura_projeto.png"
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+2_prompt:
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+Estrutura banco:
+Vou descrever igual excel:Tables;
+
+producao:"id;produto;{ano}(Nessa coluna temos os dados de "Quantidade (L.)" de produção referente ao ano)"
+Processamento_viniferas"id;cultivar;{ano}(Nessa coluna temos os dados de "Quantidade (Kg)" dos cultivo referente ao ano)"
+Processamento_americanas_hibridas"id;cultivar;{ano}(Nessa coluna temos os dados de "Quantidade (Kg)" dos cultivo referente ao ano)"
+Processamento_uvas_mesa"id;cultivar;{ano}(Nessa coluna temos os dados de "Quantidade (Kg)" dos cultivo referente ao ano)"
+Processamento_sem_classificacao"id;cultivar;{ano}(Nessa coluna temos os dados de "Quantidade (Kg)" dos cultivo referente ao ano)"
+Comercializacao"id;produto;{ano}(Nessa coluna temos os dados de "Quantidade (L.)" de produção referente ao ano)"
+Importacao_vinhos_mesa"id;produto;{ano};{ano.1}"
+(na coluna {ano} temos os dados de ""Quantidade (Kg)" de importação referente ao ano)"
+(na coluna {ano.1} temos os dados de "Valor (US$)" de importação referente ao ano)"
+Importacao_espumantes"id;produto;{ano};{ano.1}"
+(na coluna {ano} temos os dados de ""Quantidade (Kg)" de importação referente ao ano)"
+(na coluna {ano.1} temos os dados de "Valor (US$)" de importação referente ao ano)"
+Importacao_uvas_frescas"id;produto;{ano};{ano.1}"
+(na coluna {ano} temos os dados de ""Quantidade (Kg)" de importação referente ao ano)"
+(na coluna {ano.1} temos os dados de "Valor (US$)" de importação referente ao ano)"
+Importacao_uvas_passas"id;produto;{ano};{ano.1}"
+(na coluna {ano} temos os dados de ""Quantidade (Kg)" de importação referente ao ano)"
+(na coluna {ano.1} temos os dados de "Valor (US$)" de importação referente ao ano)"
+Importacao_suco_uva"id;produto;{ano};{ano.1}"
+(na coluna {ano} temos os dados de ""Quantidade (Kg)" de importação referente ao ano)"
+(na coluna {ano.1} temos os dados de "Valor (US$)" de importação referente ao ano)"
+Exportacao_vinhos_mesa"id;produto;{ano};{ano.1}"
+(na coluna {ano} temos os dados de ""Quantidade (Kg)" de Exportacao referente ao ano)"
+(na coluna {ano.1} temos os dados de "Valor (US$)" de Exportacao referente ao ano)"
+Exportacao_espumantes"id;produto;{ano};{ano.1}"
+(na coluna {ano} temos os dados de ""Quantidade (Kg)" de Exportacao referente ao ano)"
+(na coluna {ano.1} temos os dados de "Valor (US$)" de Exportacao referente ao ano)"
+Exportacao_uvas_frescas"id;produto;{ano};{ano.1}"
+(na coluna {ano} temos os dados de ""Quantidade (Kg)" de Exportacao referente ao ano)"
+(na coluna {ano.1} temos os dados de "Valor (US$)" de Exportacao referente ao ano)"
+Exportacao_suco_uva"id;produto;{ano};{ano.1}"
+(na coluna {ano} temos os dados de ""Quantidade (Kg)" de Exportacao referente ao ano)"
+(na coluna {ano.1} temos os dados de "Valor (US$)" de Exportacao referente ao ano)""
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+3_prompt:
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+analise os arquivos .py enviadas, quero que analise os codigo:"main.py","models.py","scraper.py" e "config.py" e "Print_estrutura_projeto.png"
+1. Faça usando " SQLAlchemy" pois e o medelo sugerido da FestAPI arquivo sql_app\main.py, sql_app\models.py e sql_app/database.py c
+2. Faça o esquema certo para podemor deixar a importação de dados do banco já criado de formasimples
+3. Faça o caminho os 5 novos caminhao bd/ no arquivo main.py
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+1. Primeiro que que me confirme um coisa, você analisou os arquivos enviado: ""main.py","models.py","scraper.py" e "config.py" e "Print_estrutura_projeto.png"
+" ?
+2. VocÊ compreende que quando escrever o codigo deve escrever completamente ? Ou seja eu só vou copiar e colocar o codigo.
+3. Faça uma descrição novamente descrição com oque foi pedido e me confirme que os arquivos foram lidos 

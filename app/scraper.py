@@ -10,13 +10,12 @@ def extract_data_from_table(table):
         headers = [th.text.strip() for th in table.find_all('th')]
         for row in table.find_all('tr')[1:]:
             cells = row.find_all('td')
-            if len(cells) == 2:
-                entry = {headers[0]: cells[0].text.strip(), headers[1]: cells[1].text.strip()}
+            if cells:
+                entry = {headers[i]: cells[i].text.strip() for i in range(len(cells))}
                 data.append(entry)
     return data
 
 def scrape_production(year):
-    # Faz o scraping dos dados de produção para um determinado ano
     url = f"{BASE_URL}?ano={year}&opcao=opt_02"
     response = requests.get(url)
     soup = BeautifulSoup(response.content, "html.parser")
@@ -24,7 +23,6 @@ def scrape_production(year):
     return extract_data_from_table(table)
 
 def scrape_processing(category, year=None):
-    # Faz o scraping dos dados de processamento para uma determinada categoria e ano (opcional)
     category_map = {
         "viniferas": "subopt_01",
         "americanas_hibridas": "subopt_02",
@@ -41,7 +39,6 @@ def scrape_processing(category, year=None):
     return extract_data_from_table(table)
 
 def scrape_commercialization(year):
-    # Faz o scraping dos dados de comercialização para um determinado ano
     url = f"{BASE_URL}?ano={year}&opcao=opt_04"
     response = requests.get(url)
     soup = BeautifulSoup(response.content, "html.parser")
@@ -49,7 +46,6 @@ def scrape_commercialization(year):
     return extract_data_from_table(table)
 
 def scrape_import(category, year=None):
-    # Faz o scraping dos dados de importação para uma determinada categoria e ano (opcional)
     category_map = {
         "vinhos_mesa": "subopt_01",
         "espumantes": "subopt_02",
@@ -67,7 +63,6 @@ def scrape_import(category, year=None):
     return extract_data_from_table(table)
 
 def scrape_export(category, year=None):
-    # Faz o scraping dos dados de exportação para uma determinada categoria e ano (opcional)
     category_map = {
         "vinhos_mesa": "subopt_01",
         "espumantes": "subopt_02",
