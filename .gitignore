@@ -3,3 +3,5 @@ TEST_API_EMBRAPA.egg-info/
 app/sql_app/embrapa.db
 **/__pycache__/
 app/__pycache__/
+.coverage
+error.log
