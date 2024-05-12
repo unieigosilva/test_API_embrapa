@@ -1,4 +1,10 @@
 DATABASE_PATH = "./app/sql_app/embrapa.db"
+PROCESSING_CATEGORIES = [
+    "viniferas",
+    "americanas_hibridas",
+    "uvas_mesa",
+    "sem_classificacao"
+]
 
 settings_data_processing = {
     "database_path": DATABASE_PATH,
@@ -47,6 +53,7 @@ settings_data_processing = {
         "CSV_04": "ExpSuco.csv"
     },
 }
+
 
 
 class Config_AC:
