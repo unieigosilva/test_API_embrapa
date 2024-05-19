@@ -38,20 +38,36 @@ TEST_API_EMBRAPA/
 │   │   ├── importacao_processing.py
 │   │   ├── processamento_processing.py
 │   │   └── producao_processing.py
-│   └── sql_app/
-│       ├── __init__.py
-│       ├── config.py
-│       ├── database_manager.py
-│       ├── database.py
-│       ├── dependencies.py
-│       ├── embrapa.db
-│       ├── main.py
-│       ├── models.py
-│       └── test_query.py
+│   ├── sql_app/
+│   │   ├── __init__.py
+│   │   ├── database_manager.py
+│   │   ├── database.py
+│   │   ├── dependencies.py
+│   │   ├── embrapa.db
+│   │   └── models.py 
+│   │
+│   ├── scraper/
+│   │   ├── __init__.py
+│   │   ├── models.py.py
+│   │   └─── scraper.py
+│   │   
+│   │
+│   ├──__init__.py 
+│   ├── main.py
+│   └── config.py
+│    
 ├── Docker/
 │   ├── Dockerfile
 │   ├── docker-compose.yml
 │   └── .dockerignore
+│
+├── tests/
+│   ├── __init__.py
+│   ├── test_main.py
+│   └── test_scraper.py
+│
+├──VENV/
+│
 ├── README.md
 ├── requirements.txt
 └── setup.py

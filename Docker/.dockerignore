@@ -1,0 +1,7 @@
+__pycache__
+*.pyc
+.git
+.venv
+.vscode
+Docker
+app/sql_app/embrapa.db

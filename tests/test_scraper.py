@@ -1,4 +1,4 @@
-from app.scraper.scraper import (
+from app.scrape.scraper import (
     scrape_production,
     scrape_processing,
     scrape_commercialization,

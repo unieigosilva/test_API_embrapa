@@ -1,7 +1,12 @@
+# Adicionar o diretório raiz do projeto ao sys.path
+import sys
+sys.path.append('./app/')
+
+
 import pandas as pd
 import requests
-from app.sql_app.database_manager import DatabaseManager
-from app.config import Config_AC
+from sql_app.database_manager import DatabaseManager
+from config import Config_AC
 import os
 
 class ProctDataCSV:

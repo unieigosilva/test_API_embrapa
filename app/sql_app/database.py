@@ -1,12 +1,17 @@
-# Importa a biblioteca SQLAlchemy para criação e manipulação de bancos de dados
+# Adicionar o diretório raiz do projeto ao sys.path
+import sys
+sys.path.append('./app/')
+
+
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from .models import Base, metadata
-from app.config import Config_AC  # Importando configurações
+from sql_app.models import Base, metadata
+from config import Config_AC  # Importando configurações
 
 # URL de conexão com o banco de dados. Pode ser substituída pela URL do seu banco de dados.
 database_path = Config_AC.get('database_path')
 DATABASE_URL = f"sqlite:///{database_path}"
+
 
 # Cria o engine do SQLAlchemy, que é a interface principal com o banco de dados
 engine = create_engine(DATABASE_URL, connect_args={"check_same_thread": False})
@@ -22,3 +27,4 @@ def get_db():
         yield db
     finally:
         db.close()
+

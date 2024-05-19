@@ -4,10 +4,6 @@ from enum import Enum
 from pydantic import BaseModel
 
 
-
-
-
-
 class ProcessingCategoriaEnum(str, Enum):
     viniferas = "viniferas"
     americanas_hibridas = "americanas_hibridas"

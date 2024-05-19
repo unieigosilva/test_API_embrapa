@@ -1,3 +1,8 @@
+import sys
+import subprocess
+if sys.platform == "win32":
+    subprocess.check_call([sys.executable, "-m", "pip", "install", "pywin32==305"])
+    
 from fastapi import FastAPI, Request
 import logging
 
@@ -5,15 +10,16 @@ from fastapi import FastAPI, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 from app.sql_app.database import get_db
 
-from app.sql_app.models import (
-    Production, 
+
+from sql_app.models import (
+    Production,
     Commercialization,
     Processing,
     Importation,
     Exportation,
 )
 
-from app.scraper.scraper import (
+from app.scrape.scraper import (
     scrape_production,
     scrape_processing,
     scrape_commercialization,
@@ -21,7 +27,7 @@ from app.scraper.scraper import (
     scrape_export,
 )
 
-from app.scraper.models import (
+from app.scrape.models import (
     ProductionData,
     ProcessingData,
     CommercializationData,
@@ -132,7 +138,7 @@ async def log_responses(request: Request, call_next):
 async def get_production_data(year: int, token: str):
     user = verify_token(token)
     try:
-        data = scrape_production(year)  
+        data = scrape_production(year)
         return {"year": year, "data": data}
     except Exception as e:
         logging.error(f"Falha ao buscar dados de produção para o ano {year}: {e}")
@@ -159,7 +165,7 @@ async def get_commercialization_data(year: int, token: str):
     except Exception as e:
         logging.error(f"Falha ao buscar dados de comercialização para o ano {year}: {e}")
         raise HTTPException(status_code=500, detail=f"Falha ao buscar dados de comercialização: {e}")
-    
+
 
 @app.get("/import/", response_model=ImportData)
 async def get_import_data(category: ImEXportacaoCategoriaEnum, year: int = None, token: str =None):
@@ -196,7 +202,7 @@ async def read_production(year: int, db: Session = Depends(get_db), token: str =
     except Exception as e:
         logging.error(f"Falha ao buscar dados de produção para o ano {year}: {e}")
         raise HTTPException(status_code=500, detail=str(e))
-    
+
 
 @app.get("/bd/processing/{category}/{year}")
 async def read_processing_data(category: ProcessingCategoriaEnum, year: int, token: str = None):
@@ -209,7 +215,7 @@ async def read_processing_data(category: ProcessingCategoriaEnum, year: int, tok
     except Exception as e:
         logging.error(f"Falha ao buscar dados de processamento para {category}, ano {year}: {e}")
         raise HTTPException(status_code=500, detail=str(e))
-    
+
 
 @app.get("/bd/commercialization/{year}")
 async def read_commercialization(year: int, db: Session = Depends(get_db), token: str = None):
@@ -234,7 +240,7 @@ async def read_importation_data(category: ImEXportacaoCategoriaEnum, year: int, 
     except Exception as e:
         logging.error(f"Falha ao buscar dados de importação para {category}, ano {year}: {e}")
         raise HTTPException(status_code=500, detail=str(e))
-    
+
 
 @app.get("/bd/exportation/{category}/{year}")
 async def read_exportation_data(category: ImEXportacaoCategoriaEnum, year: int, token: str = None):

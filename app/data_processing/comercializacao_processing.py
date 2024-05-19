@@ -1,7 +1,13 @@
+# Adicionar o diretório raiz do projeto ao sys.path
+import sys
+sys.path.append('./app/')
+
 import pandas as pd
 import requests
-from app.sql_app.database_manager import DatabaseManager
-from app.config import Config_AC
+from sql_app.database_manager import DatabaseManager
+from config import Config_AC
+import os
+
 
 class ComercDataCSV:
     def __init__(self):
@@ -40,7 +46,7 @@ class ComercDataCSV:
 
     def delete_csv_after_use(self):
         # Remoção do arquivo CSV após o uso para evitar desordem e uso de espaço desnecessário.
-        import os
+        
         if os.path.exists(self.csv_path):
             os.remove(self.csv_path)
             print("Arquivo CSV removido após o uso.")

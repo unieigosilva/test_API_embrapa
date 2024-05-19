@@ -1,7 +1,13 @@
+# Adicionar o diretório raiz do projeto ao sys.path
+import sys
+sys.path.append('./app/')
+
+
 import pandas as pd
 import requests
-from app.sql_app.database_manager import DatabaseManager
-from app.config import Config_AC
+from sql_app.database_manager import DatabaseManager
+from config import Config_AC
+import os
 
 class ProdDataCSV:
     def __init__(self):
@@ -27,7 +33,6 @@ class ProdDataCSV:
         print("Dados carregados no banco de dados com sucesso.")
 
     def delete_csv_after_use(self):
-        import os
         if os.path.exists(self.csv_path):
             os.remove(self.csv_path)
             print("Arquivo CSV removido após o uso.")
