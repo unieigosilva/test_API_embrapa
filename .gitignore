@@ -5,3 +5,4 @@ app/sql_app/embrapa.db
 app/__pycache__/
 .coverage
 error.log
+/venv/

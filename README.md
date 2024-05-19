@@ -28,6 +28,33 @@ Siga estes passos para configurar o ambiente de desenvolvimento:
 
 ### Estrutura do Projeto:
 
+TEST_API_EMBRAPA/
+├── app/
+│   ├── __init__.py
+│   ├── data_processing/
+│   │   ├── __init__.py
+│   │   ├── comercializacao_processing.py
+│   │   ├── exportacao_processing.py
+│   │   ├── importacao_processing.py
+│   │   ├── processamento_processing.py
+│   │   └── producao_processing.py
+│   └── sql_app/
+│       ├── __init__.py
+│       ├── config.py
+│       ├── database_manager.py
+│       ├── database.py
+│       ├── dependencies.py
+│       ├── embrapa.db
+│       ├── main.py
+│       ├── models.py
+│       └── test_query.py
+├── Docker/
+│   ├── Dockerfile
+│   ├── docker-compose.yml
+│   └── .dockerignore
+├── README.md
+├── requirements.txt
+└── setup.py
 
 
 ### Contribuindo

@@ -1,5 +1,5 @@
 
-# app/sql_app/models.py
+# Importa a biblioteca SQLAlchemy e a base de dados declarativa do arquivo database.py
 from sqlalchemy import create_engine, Column, Integer, String, MetaData, Table, text
 from sqlalchemy.orm import declarative_base, sessionmaker
 from app.config import Config_AC   # Supondo que Config_AC já está definido em config.py

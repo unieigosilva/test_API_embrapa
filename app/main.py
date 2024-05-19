@@ -4,23 +4,24 @@ import logging
 from fastapi import FastAPI, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 from app.sql_app.database import get_db
+
 from app.sql_app.models import (
     Production, 
     Commercialization,
     Processing,
     Importation,
     Exportation,
-
 )
 
-from .scraper import (
+from app.scraper.scraper import (
     scrape_production,
     scrape_processing,
     scrape_commercialization,
     scrape_import,
     scrape_export,
 )
-from .models import (
+
+from app.scraper.models import (
     ProductionData,
     ProcessingData,
     CommercializationData,
@@ -46,7 +47,6 @@ logging.basicConfig(level=logging.ERROR, filename='error.log',
                     format='%(asctime)s - %(levelname)s - %(message)s')
 
 app = FastAPI()
-
 
 
 ################################################################################################
@@ -117,8 +117,8 @@ def verify_token(token: str = Depends(oauth2_scheme)):
 
 ################################################################################################
 ################################################################################################
-################################################################################################
-################################################################################################
+
+
 # Middleware para logar respostas de erro
 @app.middleware("http")
 async def log_responses(request: Request, call_next):
