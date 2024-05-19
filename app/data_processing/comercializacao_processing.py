@@ -25,35 +25,29 @@ class ComercDataCSV:
         schema = "CREATE TABLE IF NOT EXISTS Comercializacao (produto TEXT, quantidade REAL)"
         self.db_manager.create_table_if_not_exists("Comercializacao", schema)
 
-    def download_csv(self):
+    async def download_csv(self):
         # Download do arquivo CSV usando a biblioteca requests.
         response = requests.get(self.csv_url)
         with open(self.csv_path, 'wb') as f:
             f.write(response.content)
         print("Arquivo baixado com sucesso.")
 
-    def process_csv(self):
+    async def process_csv(self):
         # Carregamento e processamento do CSV: remoção de uma coluna indesejada.
         data = pd.read_csv(self.csv_path, delimiter=';')
         data.drop(columns=data.columns[1], inplace=True)
         return data
 
-    def load_into_database(self):
+    async def load_into_database(self):
         # Carregamento dos dados processados para a tabela no banco de dados.
-        data = self.process_csv()
+        data = await self.process_csv()
         self.db_manager.load_data(data, 'Comercializacao')
         print("Dados carregados no banco de dados com sucesso.")
 
-    def delete_csv_after_use(self):
+    async def delete_csv_after_use(self):
         # Remoção do arquivo CSV após o uso para evitar desordem e uso de espaço desnecessário.
         
         if os.path.exists(self.csv_path):
             os.remove(self.csv_path)
             print("Arquivo CSV removido após o uso.")
 
-if __name__ == "__main__":
-    handler = ComercDataCSV()
-    handler.download_csv()
-    handler.process_csv()
-    handler.load_into_database()
-    handler.delete_csv_after_use()

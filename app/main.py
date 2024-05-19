@@ -1,11 +1,11 @@
-import sys
-import subprocess
-if sys.platform == "win32":
-    subprocess.check_call([sys.executable, "-m", "pip", "install", "pywin32==305"])
-    
+# Importa a função de atualização do banco de dados
+from app.data_processing.database_update import update_database
+
+
 from fastapi import FastAPI, Request
 import logging
 
+from contextlib import asynccontextmanager
 from fastapi import FastAPI, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 from app.sql_app.database import get_db
@@ -19,7 +19,7 @@ from sql_app.models import (
     Exportation,
 )
 
-from app.scrape.scraper import (
+from scrape.scraper import (
     scrape_production,
     scrape_processing,
     scrape_commercialization,
@@ -27,7 +27,7 @@ from app.scrape.scraper import (
     scrape_export,
 )
 
-from app.scrape.models import (
+from scrape.models import (
     ProductionData,
     ProcessingData,
     CommercializationData,
@@ -52,8 +52,11 @@ import logging
 logging.basicConfig(level=logging.ERROR, filename='error.log',
                     format='%(asctime)s - %(levelname)s - %(message)s')
 
-app = FastAPI()
 
+
+
+
+app = FastAPI()
 
 ################################################################################################
 ################################################################################################

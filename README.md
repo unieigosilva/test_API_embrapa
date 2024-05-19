@@ -37,7 +37,9 @@ Siga estes passos para configurar o ambiente de desenvolvimento:
     │   │   ├── exportacao_processing.py
     │   │   ├── importacao_processing.py
     │   │   ├── processamento_processing.py
-    │   │   └── producao_processing.py
+    │   │   ├── producao_processing.py
+    │   │   └── database_update.py
+    │   │
     │   ├── sql_app/
     │   │   ├── __init__.py
     │   │   ├── database_manager.py
@@ -59,6 +61,8 @@ Siga estes passos para configurar o ambiente de desenvolvimento:
     ├── Docker/
     │   ├── Dockerfile
     │   ├── docker-compose.yml
+    │   ├── initialize.py    
+    │   ├── requirements.txt       
     │   └── .dockerignore
     │
     ├── tests/
@@ -69,8 +73,9 @@ Siga estes passos para configurar o ambiente de desenvolvimento:
     ├──VENV/
     │
     ├── README.md
-    ├── requirements.txt
-    └── setup.py
+    └── .gitignore
+
+
 
 
 

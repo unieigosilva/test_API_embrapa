@@ -22,7 +22,7 @@ RUN pip install --upgrade pip
 WORKDIR /app
 
 # Copie o arquivo de requisitos e constraints e instale as dependências
-COPY ../requirements.txt /app/requirements.txt
+COPY Docker/requirements.txt /app/requirements.txt
 COPY Docker/constraints.txt /app/constraints.txt
 
 # Mostre o conteúdo dos arquivos para depuração
@@ -39,4 +39,4 @@ COPY ../ /app
 EXPOSE 8000
 
 # Comando para rodar a aplicação
-CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["sh", "-c", "python Docker/initialize.py && uvicorn app.main:app --host 0.0.0.0 --port 8000"]
