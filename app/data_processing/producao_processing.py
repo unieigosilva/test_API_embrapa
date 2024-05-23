@@ -1,19 +1,15 @@
-# Adicionar o diretório raiz do projeto ao sys.path
-import sys
-sys.path.append('./app/')
-
-
 import pandas as pd
 import requests
-from sql_app.database_manager import DatabaseManager
-from config import Config_AC
+from app.sql_app.database_manager import DatabaseManager
+from app.config import settings_data_processing
 import os
+
 
 class ProdDataCSV:
     def __init__(self):
-        self.csv_url = Config_AC.get('producao', 'url')
-        self.csv_path = Config_AC.get('producao', 'CSV')
-        database_path = Config_AC.get('database_path')  
+        self.csv_url = settings_data_processing['producao']['url']
+        self.csv_path = settings_data_processing['producao']['CSV']
+        database_path = settings_data_processing['database_path'] 
         self.db_manager = DatabaseManager(database_path)
 
     def setup_database(self):

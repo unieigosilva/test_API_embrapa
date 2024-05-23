@@ -10,13 +10,20 @@ class ProcessingCategoriaEnum(str, Enum):
     uvas_mesa = "uvas_mesa"
     sem_classificacao = "sem_classificacao"
 
-class ImEXportacaoCategoriaEnum(str, Enum):
+class ImportacaoCategoriaEnum(str, Enum):
     vinhos_mesa = "vinhos_mesa"
     espumantes = "espumantes"
     uvas_frescas = "uvas_frescas"
     uvas_passas = "uvas_passas"
     suco_uva = "suco_uva"
-    
+
+class ExportacaoCategoriaEnum(str, Enum):
+    vinhos_mesa = "vinhos_mesa"
+    espumantes = "espumantes"
+    uvas_frescas = "uvas_frescas"
+    suco_uva = "suco_uva"
+
+
 
 class ProductDetail(BaseModel):
     Produto: str

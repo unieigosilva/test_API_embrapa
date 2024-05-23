@@ -1,4 +1,3 @@
-```markdown
 # TEST_API_EMBRAPA
 
 
@@ -16,8 +15,8 @@ Este projeto consiste em uma API pública desenvolvida em Python com FastAPI par
 5. Fazer um MVP realizando o deploy com um link compartilhável e um repositório no GitHub.
 
 
-### Estrutura do Projeto:
-    .
+## Estrutura do Projeto:
+    
     TEST_API_EMBRAPA/
     ├── app/
     │   ├── __init__.py
@@ -61,6 +60,8 @@ Este projeto consiste em uma API pública desenvolvida em Python com FastAPI par
     │   └── test_scraper.py
     │
     ├──VENV/
+    │
+    ├── .env
     │
     ├── README.md
     └── .gitignore

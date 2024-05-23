@@ -1,21 +1,17 @@
-# Adicionar o diretório raiz do projeto ao sys.path
-import sys
-sys.path.append('./app/')
-
 import pandas as pd
 import requests
-from sql_app.database_manager import DatabaseManager
-from config import Config_AC
+from app.sql_app.database_manager import DatabaseManager
+from app.config import settings_data_processing
 import os
 
 
 class ComercDataCSV:
     def __init__(self):
         # Configurações iniciais: obtenção da URL e caminho do arquivo CSV a partir de um arquivo de configuração centralizado.
-        self.csv_url = Config_AC.get('Comercializacao', 'url')
-        self.csv_path = Config_AC.get('Comercializacao', 'CSV')
+        self.csv_url = settings_data_processing['Comercializacao']['url']
+        self.csv_path = settings_data_processing['Comercializacao']['CSV']
         # Criação de uma instância do gerenciador de banco de dados.
-        database_path = Config_AC.get('database_path')  
+        database_path = settings_data_processing['database_path']  
         self.db_manager = DatabaseManager(database_path)
         # Configuração e verificação da existência da tabela no banco de dados.
         self.setup_database()

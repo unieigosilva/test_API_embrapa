@@ -1,10 +1,11 @@
 import requests
 from bs4 import BeautifulSoup
+from app.config import scraper  # Importar o novo dicionário do arquivo config.py
 
-BASE_URL = "http://vitibrasil.cnpuv.embrapa.br/index.php"
+
+BASE_URL = scraper['base_url']
 
 def extract_data_from_table(table):
-    # Extrai os dados de uma tabela HTML e retorna uma lista de dicionários
     data = []
     if table:
         headers = [th.text.strip() for th in table.find_all('th')]
@@ -23,13 +24,7 @@ def scrape_production(year):
     return extract_data_from_table(table)
 
 def scrape_processing(category, year=None):
-    category_map = {
-        "viniferas": "subopt_01",
-        "americanas_hibridas": "subopt_02",
-        "uvas_mesa": "subopt_03",
-        "sem_classificacao": "subopt_04",
-    }
-    params = {"opcao": "opt_03", "subopcao": category_map[category]}
+    params = {"opcao": "opt_03", "subopcao": scraper['processing'][category]}
     if year:
         params["ano"] = year
     url = f"{BASE_URL}?{('&'.join([f'{k}={v}' for k, v in params.items()]))}"
@@ -46,14 +41,7 @@ def scrape_commercialization(year):
     return extract_data_from_table(table)
 
 def scrape_import(category, year=None):
-    category_map = {
-        "vinhos_mesa": "subopt_01",
-        "espumantes": "subopt_02",
-        "uvas_frescas": "subopt_03",
-        "uvas_passas": "subopt_04",
-        "suco_uva": "subopt_05",
-    }
-    params = {"opcao": "opt_05", "subopcao": category_map[category]}
+    params = {"opcao": "opt_05", "subopcao": scraper['import'][category]}
     if year:
         params["ano"] = year
     url = f"{BASE_URL}?{('&'.join([f'{k}={v}' for k, v in params.items()]))}"
@@ -63,13 +51,7 @@ def scrape_import(category, year=None):
     return extract_data_from_table(table)
 
 def scrape_export(category, year=None):
-    category_map = {
-        "vinhos_mesa": "subopt_01",
-        "espumantes": "subopt_02",
-        "uvas_frescas": "subopt_03",
-        "suco_uva": "subopt_04",
-    }
-    params = {"opcao": "opt_06", "subopcao": category_map[category]}
+    params = {"opcao": "opt_06", "subopcao": scraper['export'][category]}
     if year:
         params["ano"] = year
     url = f"{BASE_URL}?{('&'.join([f'{k}={v}' for k, v in params.items()]))}"

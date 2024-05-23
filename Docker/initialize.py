@@ -1,3 +1,6 @@
+# Adicionar o diretório raiz do projeto ao sys.path
+import sys
+sys.path.append('./app/')
 import sys
 import subprocess
 import asyncio

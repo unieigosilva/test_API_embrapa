@@ -1,12 +1,7 @@
-# Adicionar o diretório raiz do projeto ao sys.path
-import sys
-sys.path.append('./app/')
-
-
 import pandas as pd
 import requests
-from sql_app.database_manager import DatabaseManager
-from config import Config_AC
+from app.sql_app.database_manager import DatabaseManager
+from app.config import settings_data_processing
 import os
 
 class ProctDataCSV:
@@ -14,7 +9,7 @@ class ProctDataCSV:
         self.csv_url = csv_url
         self.csv_path = csv_path
         self.table_name = table_name
-        database_path = Config_AC.get('database_path')  
+        database_path = settings_data_processing['database_path']  
         self.db_manager = DatabaseManager(database_path)
 
     async def download_csv(self):

@@ -1,15 +1,10 @@
-# Adicionar o diretório raiz do projeto ao sys.path
-import sys
-sys.path.append('./app/')
-
-
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from sql_app.models import Base, metadata
-from config import Config_AC  # Importando configurações
+from app.sql_app.models import Base, metadata
+from app.config import sql_app  # Importando configurações
 
 # URL de conexão com o banco de dados. Pode ser substituída pela URL do seu banco de dados.
-database_path = Config_AC.get('database_path')
+database_path = sql_app['database_path']
 DATABASE_URL = f"sqlite:///{database_path}"
 
 

@@ -1,14 +1,13 @@
-# Adicionar o diretório raiz do projeto ao sys.path
-import sys
-sys.path.append('./app/')
+from app.data_processing.producao_processing import ProdDataCSV
+from app.data_processing.processamento_processing import ProctDataCSV
+from app.data_processing.comercializacao_processing import ComercDataCSV
+from app.data_processing.importacao_processing import ImportDataCSV
+from app.data_processing.exportacao_processing import ExportDataCSV
+from app.config import Config_AC,settings_data_processing
 
 
-from data_processing.producao_processing import ProdDataCSV
-from data_processing.processamento_processing import ProctDataCSV
-from data_processing.comercializacao_processing import ComercDataCSV
-from data_processing.importacao_processing import ImportDataCSV
-from data_processing.exportacao_processing import ExportDataCSV
-from config import Config_AC
+import asyncio
+
 
 
     # Atualiza dados de produção
@@ -21,17 +20,13 @@ async def update_producacao():
 
 async def update_processamento():
     # Configurações para cada tipo de Processa
-    configurations = [
-        {'key': '01', 'table_suffix': 'viniferas'},
-        {'key': '02', 'table_suffix': 'americanas_hibridas'},
-        {'key': '03', 'table_suffix': 'uvas_mesa'},
-        {'key': '04', 'table_suffix': 'sem_classificacao'}
-    ]
+    configurations = settings_data_processing['Processamento']['configurations']
 
+    
     # Cria e executa o processo para cada configuração
     for config in configurations:
-        csv_url = Config_AC.get('Processamento', f'url_{config["key"]}')
-        csv_path = Config_AC.get('Processamento', f'CSV_{config["key"]}')
+        csv_url = settings_data_processing['Processamento'][f'url_{config["key"]}']
+        csv_path = settings_data_processing['Processamento'][f'CSV_{config["key"]}']
         table_name = f'Processamento_{config["table_suffix"]}'
         handler = ProctDataCSV(csv_url, csv_path, table_name)
         await handler.download_csv()
@@ -51,13 +46,7 @@ async def update_comercializacao():
 
 async def update_importacao():
 
-    configurations = [
-        {'key': '01', 'table_suffix': 'vinhos_mesa'},
-        {'key': '02', 'table_suffix': 'espumantes'},
-        {'key': '03', 'table_suffix': 'uvas_frescas'},
-        {'key': '04', 'table_suffix': 'uvas_passas'},
-        {'key': '05', 'table_suffix': 'suco_uva'}
-    ]
+    configurations = settings_data_processing['Importacao']['configurations']
 
     # Cria e executa o processo para cada configuração.
     for config in configurations:
@@ -73,12 +62,7 @@ async def update_importacao():
 
 async def update_exportacao():
 
-    configurations = [
-        {'key': '01', 'table_suffix': 'vinhos_mesa'},
-        {'key': '02', 'table_suffix': 'espumantes'},
-        {'key': '03', 'table_suffix': 'uvas_frescas'},
-        {'key': '04', 'table_suffix': 'suco_uva'}
-    ]
+    configurations = settings_data_processing['Exportacao']['configurations']
     # Cria e executa o processo para cada configuração.
     for config in configurations:
         csv_url = Config_AC.get('Exportacao', f'url_{config["key"]}')
@@ -91,11 +75,13 @@ async def update_exportacao():
         await  handler.delete_csv_after_use()
 
 async def update_database():
-    await update_producacao()
-    await update_processamento()
-    await update_comercializacao()
-    await update_importacao()
-    await update_exportacao()
+    await asyncio.gather(
+        update_producacao(),
+        update_processamento(),
+        update_comercializacao(),
+        update_importacao(),
+        update_exportacao()
+    )
 
 if __name__ == "__main__":
    
