@@ -18,3 +18,6 @@ def install_pywin32():
 if __name__ == "__main__":
     install_pywin32()
     asyncio.run(update_database())
+    print("Para Iniciazar a API clicar http://127.0.0.1:8000 (Press CTRL+C to quit)")
+    print("Para Verificação de  documentação da API clicar http://127.0.0.1:8000/docs (Press CTRL+C to quit)")
+    print("Para gerar um tokem para API username: teste, password: teste ")
